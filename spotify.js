@@ -11,19 +11,15 @@ class Spotify extends Command{
     })
   }
   async run (message,args,Discord){
-    const db = require('quick.db')
-    const fetch = db.fetch(`lang_${message.guild.id}`)
-    if(fetch === null) db.set(`lang_${message.guild.id}`,'english')
-    let lang = require(`../../language/${fetch}.js`)
 
     const Can = require("canvas")  
  const moment = require('moment')
  let user = message.mentions.users.first() ||this.client.users.cache.get(args[0]) || message.author
   if(user.presence.activities[0] === undefined ) return message.channel.send(lang.get("spotify_err"))  
   let n =user.presence.activities.find(a => a.name === 'Spotify')
-  if(!n)return message.channel.send(lang.get("spotify_err"))
+  if(!n)return message.channel.send("user not listening to spotify")
   const GIF = new GIFEncoder(600, 200); 
-  let m = await message.channel.send(lang.get('spotify_load'))
+  let m = await message.channel.send('loading')
   const canvas = Can.createCanvas(600,200)
  const ctx = canvas.getContext("2d")
  let elap = (Date.now()-n.timestamps.start)
